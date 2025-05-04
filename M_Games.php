@@ -1,5 +1,5 @@
 <?php
-session.start(); // Start the session to access user information
+session_start(); // Start the session to access user information
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -9,9 +9,9 @@ if (!isset($_SESSION['user_id'])) {
 
 // Database connection details
 $servername = "localhost"; // MySQL server
-$username = "oobed"; // MySQL username
-password = "dbforassignmentm3"; // MySQL password
-dbname = "oobed_videogames"; // Database name
+$username = "root"; // Changed from "oobed" to "root"
+$password = ""; // Changed from "dbforassignmentm3" to empty (default XAMPP)
+$dbname = "oobed_videogames"; // Database name
 
 // Create the database connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -26,19 +26,19 @@ $user_id = $_SESSION['user_id'];
 
 // Fetch games with a rating of "M" for the specified user
 $sql = "SELECT title, genre, release_date, platform, completed, image_link FROM owned_games WHERE user_id = ? AND rating = 'M'";
-$stmt = $conn.prepare(sql);
-$stmt.bind_param("i", user_id);
-stmt.execute();
-$result = $stmt.get_result();
+$stmt = $conn->prepare($sql); // Fixed: changed dot to arrow, added $ to sql
+$stmt->bind_param("i", $user_id); // Fixed: changed dot to arrow, added $ to user_id
+$stmt->execute(); // Fixed: added $ to stmt, changed dot to arrow
+$result = $stmt->get_result(); // Fixed: changed dot to arrow
 
 // Collect the games into an array for display
 $games = [];
-while ($row = $stmt.fetch_assoc()) {
-    games[] = row;
+while ($row = $stmt->fetch_assoc()) { // Fixed: changed dot to arrow, added $ to stmt
+    $games[] = $row; // Fixed: added $ to row
 }
 
 // Close the database connection
-conn.close();
+$conn->close(); // Fixed: added $ to conn, changed dot to arrow
 ?>
 
 <!DOCTYPE html>

@@ -3,13 +3,12 @@ session_start(); // Start session for tracking user login
 
 // Set up database connection parameters
 $servername = "localhost"; // MySQL server
-$username = "oobed"; // MySQL username
-$password = "dbforassignmentm3"; // MySQL password
+$username = "root"; // MySQL username (changed to root)
+$password = ""; // MySQL password (typically empty for default XAMPP)
 $dbname = "oobed_videogames"; // Database name
 
 // Create connection to the database
 $conn = new mysqli($servername, $username, $password, $dbname);
-
 // Check the database connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

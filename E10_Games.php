@@ -7,13 +7,13 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Database connection details
+// Set up database connection parameters
 $servername = "localhost"; // MySQL server
-$username = "oobed"; // MySQL username
-$password = "dbforassignmentm3"; // MySQL password
+$username = "root"; // MySQL username (changed to root)
+$password = ""; // MySQL password (typically empty for default XAMPP)
 $dbname = "oobed_videogames"; // Database name
 
-// Create the database connection
+// Create connection to the database
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check the database connection
@@ -26,7 +26,7 @@ $user_id = $_SESSION['user_id'];
 
 // Fetch games with a rating of "E10" for the specified user
 $sql = "SELECT title, genre, release_date, platform, completed, image_link FROM owned_games WHERE user_id = ? AND rating = 'E10+'";
-$stmt = $conn->prepare(sql);
+$stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
