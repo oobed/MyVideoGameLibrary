@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightgray;
+            padding: 20px;
+        }
+
+        h2 {
+            font-family: "Garamond", serif;
+            color: blueviolet;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: 10px;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .game-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .game-card h3 {
+            margin-top: 0;
+        }
+
+        .game-card p {
+            margin: 5px 0;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap; /* Allows multiple cards in a row */
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Personal Library</h2>
+    <div class="card-container" id="game-cards">
+        <!-- Game cards will be inserted here by JavaScript -->
+    </div>
+
+    <script>
+        // Sample data representing games in a user's library
+        const games = [
+            {
+                title: "The Legend of Zelda: Breath of the Wild",
+                genre: "Adventure",
+                releaseDate: "2017-03-03",
+                platform: "Nintendo Switch",
+                completed: true,
+                rating: "E10",
+                image: "https://example.com/zelda.jpg"
+            },
+            {
+                title: "Dark Souls III",
+                genre: "RPG",
+                releaseDate: "2016-03-24",
+                platform: "PC",
+                completed: false,
+                rating: "M",
+                image: "https://example.com/dark_souls.jpg"
+            },
+            {
+                title: "FIFA 23",
+                genre: "Sports",
+                releaseDate: "2022-09-30",
+                platform: "PS5",
+                completed: false,
+                rating: "E",
+                image: "https://example.com/fifa.jpg"
+            }
+        ];
+
+        // Function to create a game card element
+        function createGameCard(game) {
+            const card = document.createElement("div");
+            card.className = "game-card";
+
+            const img = document.createElement("img");
+            img.src = game.image; // Use the game's image
+            img.alt = `${game.title} cover`;
+
+            const title = document.createElement("h3");
+            title.innerText = game.title;
+
+            const genre = document.createElement("p");
+            genre.innerText = `Genre: ${game.genre}`;
+
+            const platform = document.createElement("p");
+            platform.innerText = `Platform: ${game.platform}`;
+
+            const releaseDate = document.createElement("p");
+            releaseDate.innerText = `Release Date: ${game.releaseDate}`;
+
+            const completed = document.createElement("p");
+            completed.innerText = `Completed: ${game.completed ? "Yes" : "No"}`;
+
+            const rating = document.createElement("p");
+            rating.innerText = `Rating: ${game.rating}`;
+
+            // Append elements to the card
+            card.appendChild(img);
+            card.appendChild(title);
+            card.appendChild(genre);
+            card.appendChild(platform);
+            card.appendChild(releaseDate);
+            card.appendChild(completed);
+            card.appendChild(rating);
+
+            return card;
+        }
+
+        // Insert game cards into the card-container
+        const cardContainer = document.querySelector("#game-cards");
+        games.forEach(game => {
+            const card = createGameCard(game);
+            cardContainer.appendChild(card);
+        });
+    </script>
+</body>
+</html>

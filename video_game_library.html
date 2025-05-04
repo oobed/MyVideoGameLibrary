@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>The Video Game Library</title>
+
+          
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #111; /* Adjusted background color */
+            color: white; /* Adjusted text color */
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px 0; /* Adjusted padding */
+            text-align: center; /* Centered text */
+            height:auto;
+        }
+
+       /* .ratings {
+            display: grid; 
+           / grid-template-columns: repeat(4, 1fr);
+            width: 100%; 
+            text-align: center; 
+        }*/
+
+        #title {
+            flex-grow: 1; /* Allow the title to grow and occupy available space */
+            text-align: center; /* Center the title */
+        }
+
+        #title h1 {
+            margin: 0; /* Remove margin for better alignment */
+        }
+
+  
+
+        .ratings a {
+            color: white; /* White text for the ratings */
+            text-decoration: none;
+            padding: 25px 0; 
+/*            padding: 10px 0;  Adjust padding to increase cell height */
+            display: block; /* Make the links fill the cell */
+            border-radius: 5px; /* Rounded corners for the links */
+            margin: 0 2px; /* Add some space between cells */
+            background-color: #666; /* Background color for the links */
+            height:100%;
+            font-size: 100px;
+
+        }
+
+        .ratings {
+            background-color: #444; 
+            padding: 5px 0; 
+            text-align: center; 
+            width: 100%; 
+            height: 100%;
+            box-sizing: border-box; 
+        }
+
+        .ratings ul {
+           /* padding: 0;
+            margin: 0;
+            list-style-type: none;
+            height: 200px;
+            display: flex; 
+            justify-content: space-around; */
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+            height: 100%; /* Adjusted height to fill the ratings box */
+            display: flex; /* Use flexbox to distribute space */
+            justify-content: space-around; /* Distribute items evenly */
+            align-items: center;
+
+        }
+
+
+        .ratings ul li {
+            flex: 1; /* Equal width distribution */
+            text-align: center; /* Center text horizontally */
+            height: 100%;
+        }
+
+        .ratings a:hover {
+            background-color: #888; /* Hover effect for the links */
+        }
+
+        
+
+        #user-actions button,
+        #personal-library-link button,
+        {
+            padding: 8px 15px; /* Adjusted padding */
+            background-color: #555;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        #user-actions button:hover,
+        #personal-library-link:hover,
+        {
+            background-color: #777;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+            text-align: center; /* Centered text */
+        }
+
+        input[type="text"] {
+            padding: 8px; /* Adjusted padding */
+        }
+
+        button[type="submit"] {
+            padding: 8px 15px; /* Adjusted padding */
+            background-color: #555;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #777;
+        }
+
+        .upper-right{
+            position: absolute; top: 0px; right: 0px;
+            background-color: slateblue;
+        }
+
+        .container {
+             display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+           /* padding: 20px;
+            text-align: center; */
+        }
+
+        .container img {
+            flex-shrink: 0;
+            min-width: 80%;
+            min-height: 80%
+            /*width: 100%;
+            max-width: 400px; 
+            height: auto;
+            display: bllock;
+            margin: 0 auto 20px; */
+
+        }
+
+       /* .game-card {
+          background-color: #555;
+          border-radius: 5px;
+          padding: 10px;
+          margin-bottom: 20px;
+          color: white;
+        }*/
+
+        #error-message {
+          color: red;
+          display: none;
+        }
+
+        #num-results {
+            font-weight: bold;
+        }
+
+
+        #search-results {
+          margin-top: 20px;
+          text-align: center;
+        }
+
+        .game-card {
+          background-color: #555;
+          border-radius: 5px;
+          padding: 10px;
+          margin-bottom: 20px;
+          color: white;
+        }
+
+        .game-card img {
+          max-width: 100%;
+          height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="ratings">
+                <ul>
+                    <li><a href="E_Games.php">E</a></li>
+                    <li><a href="E10_Games.php">E10</a></li>
+                    <li><a href="T_Games.php">T</a></li>
+                    <li><a href="M_Games.php">M</a></li> 
+                </ul>
+                </div>
+                <div class="upper-right">
+                    <div id="user-actions">
+                        <!-- Updated to use anchor tags with href attributes -->
+                        <a href="login.php"><button>Login</button></a>
+                        <a href="signup.php"><button>Signup</button></a>
+                    </div>
+                    <div id="personal-library-link">
+                        <a href="personal_library.php"><button>Personal Library</button></a>
+                    </div>
+                </div>
+        </nav>
+        <div id="title">
+            <h1>The Video Game Library</h1>
+            <!-- <form action="/search" method="get">
+                <input type="text" name="query" placeholder="Search games...">
+                <div id="error-message">Enter your search:</div>
+                <button type="submit">🕵️‍♂️</button>
+            </form> -->
+            <!-- <a href="add_game_to_library.html"><button>Add Game to Library</button> -->
+
+        </div>
+    </header>
+    <div class="container">
+        <img src='vimage1.jpg' alt='Image One'> 
+    </div>
+
+    <div id="search-results"></div>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+</body>
+</html>
+
+
+

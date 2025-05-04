@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E Games Database</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    .container {
+      padding-top: 20px;
+    }
+    .card {
+      margin-bottom: 20px;
+    }
+    #error-message {
+      color: red;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="text-center mt-4">E Games Database</h1>
+  <form id="search-form">
+    <div class="form-row align-items-center">
+      <div class="col-12 col-sm-8 col-md-6 mx-auto mt-4">
+        <label for="search-term" class="sr-only">Search:</label>
+        <input type="text" class="form-control" id="search-term" placeholder="Search...">
+        <div id="error-message">Enter your search</div>
+      </div>
+      <div class="col-12 col-sm-4 col-md-3 mx-auto mt-4">
+        <select class="form-control" id="search-limit">
+          <option value="5">5 results</option>
+          <option value="10">10 results</option>
+          <option value="25">25 results</option>
+          <option value="50">50 results</option>
+          <option value="100">100 results</option>
+        </select>
+      </div>
+      <div class="col-12 mx-auto mt-4">
+        <button type="submit" class="btn btn-primary btn-block">Search</button>
+      </div>
+    </div>
+  </form>
+  <div class="text-center mt-4">
+    <p>Showing <span id="num-results">0</span> result(s).</p>
+  </div>
+  <div class="row" id="game-results"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+   
+  
+
+  $(document).ready(function() {
+    // Function to create game card
+    function createGameCard(game) {
+      const card = `
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+          <div class="card">
+            <img src="${game.background_image ? game.background_image : 'placeholder.jpg'}" class="card-img-top" alt="${game.name} Poster">
+            <div class="card-body">
+              <h5 class="card-title">${game.name}</h5>
+              <p class="card-text">Genre: ${game.genres ? game.genres.map(genre => genre.name).join(', ') : 'N/A'}</p>
+              <p class="card-text">Release Date: ${game.released}</p>
+              <p class="card-text">Rating: ${game.rating ? game.rating : 'N/A'}</p>
+            </div>
+          </div>
+        </div>
+      `;
+      $('#game-results').append(card);
+    }
+
+    // Function to fetch game data
+    function fetchGames(query, limit = 5) {
+      const apiKey = '2bba48154b3046638cc54a06bc95d3d5';
+      const url = query === '' ?
+        `https://api.rawg.io/api/games?key=${apiKey}&ordering=-added&page_size=${limit}` :
+        `https://api.rawg.io/api/games?key=${apiKey}&search=${query}&page_size=${limit}`;
+        
+      $.ajax({
+        url: url,
+        method: 'GET',
+        success: function(data) {
+          $('#num-results').text(data.count);
+          $('#game-results').empty();
+          const results = data.results;
+          results.forEach(game => createGameCard(game));
+        },
+        error: function(xhr, status, error) {
+          alert('An error occurred while fetching data.');
+          console.error(error);
+        }
+      });
+    }
+
+    Initial fetch for games
+    fetchGames('', 5);
+
+    Form submission handler
+    $('#search-form').submit(function(event) {
+      event.preventDefault();
+      const searchTerm = $('#search-term').val().trim();
+      const limit = $('#search-limit').val();
+      if (searchTerm === '') {
+        $('#error-message').show();
+        $('#game-results').empty();
+        $('#num-results').text('0');
+      } else {
+        $('#error-message').hide();
+        fetchGames(searchTerm, limit);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
